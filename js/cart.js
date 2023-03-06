@@ -134,7 +134,7 @@ function validateForm(input, inputError, inputLabel, regExp) {
 
 const orderButton = document.querySelector(`#order`);
 
-document.querySelector('form').addEventListener('submit', (event) => {
+document.querySelector(`form`).addEventListener(`submit`, (event) => {
     event.preventDefault();
 })
 
@@ -144,29 +144,29 @@ orderButton.addEventListener(`click`, () => {
         if (
             validateForm(`#firstName`, `#firstNameErrorMsg`, `prénom`, /^[a-zA-ZàáâäçèéêëìíîïñòóôöùúûüÿÀÁÂÄÇÈÉÊËÌÍÎÏÑÒÓÔÖÙÚÛÜŸ-]+$/) &&
             validateForm(`#lastName`, `#lastNameErrorMsg`, `nom`, /^[a-zA-ZàáâäçèéêëìíîïñòóôöùúûüÿÀÁÂÄÇÈÉÊËÌÍÎÏÑÒÓÔÖÙÚÛÜŸ-]+$/) &&
-            validateForm(`#address`, `#addressErrorMsg`, `adresse`, /^\d+\s+[a-zA-Z0-9\s.'-]+$/) &&
+            validateForm(`#address`, `#addressErrorMsg`, `adresse`, /^\d+\s+[a-zA-Z0-9\s.`-]+$/) &&
             validateForm(`#city`, `#cityErrorMsg`, `ville`, /^[a-zA-ZàáâäçèéêëìíîïñòóôöùúûüÿÀÁÂÄÇÈÉÊËÌÍÎÏÑÒÓÔÖÙÚÛÜŸ-]+\s?([a-zA-ZàáâäçèéêëìíîïñòóôöùúûüÿÀÁÂÄÇÈÉÊËÌÍÎÏÑÒÓÔÖÙÚÛÜŸ-]+\s?)*$/) &&
             validateForm(`#email`, `#emailErrorMsg`, `email`, /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/)
         ) {
 
             let products = []
 
-            JSON.parse(localStorage.getItem('selectedProducts')).forEach(item => {
+            JSON.parse(localStorage.getItem(`selectedProducts`)).forEach(item => {
                 products.push(item.productId)
             })
 
             fetch(`http://localhost:3000/api/products/order`, {
-                method: 'POST',
+                method: `POST`,
                 headers: {
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify({
                     contact: {
-                        firstName: document.querySelector('#firstName').value,
-                        lastName: document.querySelector('#lastName').value,
-                        address: document.querySelector('#address').value,
-                        city: document.querySelector('#city').value,
-                        email: document.querySelector('#email').value
+                        firstName: document.querySelector(`#firstName`).value,
+                        lastName: document.querySelector(`#lastName`).value,
+                        address: document.querySelector(`#address`).value,
+                        city: document.querySelector(`#city`).value,
+                        email: document.querySelector(`#email`).value
                     },
                     products
                 })
@@ -180,6 +180,6 @@ orderButton.addEventListener(`click`, () => {
 
         }
     } else {
-        alert('Vous devez ajouter au moins un produit au panier pour commander.');
+        alert(`Vous devez ajouter au moins un produit au panier pour commander.`);
     }
 });
