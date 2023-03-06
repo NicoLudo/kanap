@@ -16,12 +16,23 @@ function displayEmptyCartMessage() {
 }
 
 /**
+ * Initialise les valeurs de quantité et de prix à zéro.
+ *
+ * @returns {Object} Un objet contenant les propriétés `totalQuantity` et `totalPrice`, toutes deux initialisées à zéro.
+ */
+function initTotalValues() {
+    let totalQuantity = 0;
+    let totalPrice = 0;
+    return { totalQuantity, totalPrice };
+}
+
+/**
  * Met à jour le panier (prix, quantité et message panier vide).
+ * 
  * @param {Array} selectedProducts Listes des produits
  */
 function updateCart(selectedProducts) {
-    let totalQuantity = 0;
-    let totalPrice = 0;
+    let { totalQuantity, totalPrice } = initTotalValues();
 
     if (selectedProducts.length === 0) {
         displayEmptyCartMessage()
@@ -50,8 +61,7 @@ function updateCart(selectedProducts) {
 }
 
 if (selectedProducts && selectedProducts.length > 0) {
-    let totalQuantity = 0;
-    let totalPrice = 0;
+    let { totalQuantity, totalPrice } = initTotalValues();
 
     selectedProducts.forEach((selectedProduct, index) => {
         const cartItem = document.createElement(`article`);
