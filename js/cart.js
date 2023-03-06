@@ -11,7 +11,7 @@ const selectedProducts = JSON.parse(localStorage.getItem(`selectedProducts`));
 function displayEmptyCartMessage() {
     const emptyCartMessage = document.createElement(`p`);
     emptyCartMessage.innerHTML = `Votre panier est vide.`;
-    document.querySelector(`#cart__items`).innerHTML = '';
+    document.querySelector(`#cart__items`).innerHTML = ``;
     document.querySelector(`#cart__items`).append(emptyCartMessage);
 }
 
@@ -24,7 +24,7 @@ function updateCart(selectedProducts) {
     let totalPrice = 0;
 
     if (selectedProducts.length === 0) {
-        displayEmptyCartMessage();
+        displayEmptyCartMessage()
     } else {
         document.querySelector(`#totalQuantity`).textContent = 0;
         document.querySelector(`#totalPrice`).textContent = 0;
@@ -50,29 +50,32 @@ function updateCart(selectedProducts) {
 }
 
 if (selectedProducts && selectedProducts.length > 0) {
+    let totalQuantity = 0;
+    let totalPrice = 0;
+
     selectedProducts.forEach((selectedProduct, index) => {
         const cartItem = document.createElement(`article`);
         cartItem.classList.add(`cart__item`);
         cartItem.innerHTML = `
-        <div class="cart__item__img">
-            <img src="${selectedProduct.imageUrl}" alt="${selectedProduct.altTxt}">
+    <div class="cart__item__img">
+        <img src="${selectedProduct.imageUrl}" alt="${selectedProduct.altTxt}">
+    </div>
+    <div class="cart__item__content">
+        <div class="cart__item__content__description">
+            <h2>${selectedProduct.name}</h2>
+            <p>${selectedProduct.color}</p>
+            <p>${selectedProduct.price} €</p>
         </div>
-        <div class="cart__item__content">
-            <div class="cart__item__content__description">
-                <h2>${selectedProduct.name}</h2>
-                <p>${selectedProduct.color}</p>
-                <p>${selectedProduct.price} €</p>
+        <div class="cart__item__content__settings">
+            <div class="cart__item__content__settings__quantity">
+                <p>Qté : </p>
+                <input type="number" class="itemQuantity" name="itemQuantity" min="1" max="100" value="${selectedProduct.quantity}">
             </div>
-            <div class="cart__item__content__settings">
-                <div class="cart__item__content__settings__quantity">
-                    <p>Qté : </p>
-                    <input type="number" class="itemQuantity" name="itemQuantity" min="1" max="100" value="${selectedProduct.quantity}">
-                    </div>
-                    <div class="cart__item__content__settings__delete">
-                    <p class="deleteItem">Supprimer</p>
-                </div>
+            <div class="cart__item__content__settings__delete">
+                <p class="deleteItem">Supprimer</p>
             </div>
-        </div>`;
+        </div>
+    </div>`;
         document.querySelector(`#cart__items`).append(cartItem);
 
         const itemQuantityInput = cartItem.querySelector(`.itemQuantity`);
@@ -106,13 +109,13 @@ if (selectedProducts && selectedProducts.length > 0) {
     document.querySelector(`#totalQuantity`).textContent = totalQuantity;
     document.querySelector(`#totalPrice`).textContent = totalPrice.toFixed(2);
 } else {
-    displayEmptyCartMessage();
+    displayEmptyCartMessage()
 }
-
 
 /* FORMULAIRE */
 
 function validateForm(input, inputError, inputLabel, regExp) {
+
     let tester = false
     input = document.querySelector(input)
     inputError = document.querySelector(inputError)
@@ -125,6 +128,7 @@ function validateForm(input, inputError, inputLabel, regExp) {
         inputError.textContent = ``;
         tester = true
     }
+
     return tester
 }
 
@@ -135,6 +139,7 @@ document.querySelector('form').addEventListener('submit', (event) => {
 })
 
 orderButton.addEventListener(`click`, () => {
+
     if (selectedProducts && selectedProducts.length > 0) {
         if (
             validateForm(`#firstName`, `#firstNameErrorMsg`, `prénom`, /^[a-zA-ZàáâäçèéêëìíîïñòóôöùúûüÿÀÁÂÄÇÈÉÊËÌÍÎÏÑÒÓÔÖÙÚÛÜŸ-]+$/) &&
@@ -143,6 +148,7 @@ orderButton.addEventListener(`click`, () => {
             validateForm(`#city`, `#cityErrorMsg`, `ville`, /^[a-zA-ZàáâäçèéêëìíîïñòóôöùúûüÿÀÁÂÄÇÈÉÊËÌÍÎÏÑÒÓÔÖÙÚÛÜŸ-]+\s?([a-zA-ZàáâäçèéêëìíîïñòóôöùúûüÿÀÁÂÄÇÈÉÊËÌÍÎÏÑÒÓÔÖÙÚÛÜŸ-]+\s?)*$/) &&
             validateForm(`#email`, `#emailErrorMsg`, `email`, /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/)
         ) {
+
             let products = []
 
             JSON.parse(localStorage.getItem('selectedProducts')).forEach(item => {
@@ -171,6 +177,7 @@ orderButton.addEventListener(`click`, () => {
                     window.location.href = `./confirmation.html?orderId=${data.orderId}`
                 })
                 .catch(error => console.error(error));
+
         }
     } else {
         alert('Vous devez ajouter au moins un produit au panier pour commander.');
