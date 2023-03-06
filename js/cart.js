@@ -40,7 +40,6 @@ function updateTotalValues(totalQuantity, totalPrice) {
     totalPriceElement.textContent = totalPrice.toFixed(2);
 }
 
-
 /**
  * Met à jour le panier (prix, quantité et message panier vide).
  * 
@@ -70,7 +69,7 @@ function updateCart(selectedProducts) {
         totalQuantity += selectedProduct.quantity;
     });
 
-    updateTotalValues(totalQuantity, totalPrice);;
+    updateTotalValues(totalQuantity, totalPrice);
 }
 
 if (selectedProducts && selectedProducts.length > 0) {
