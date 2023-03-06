@@ -27,6 +27,21 @@ function initTotalValues() {
 }
 
 /**
+ * Met à jour les valeurs du total de quantité et de prix dans le panier.
+ *
+ * @param {number} totalQuantity La quantité totale des produits dans le panier.
+ * @param {number} totalPrice Le prix total des produits dans le panier.
+ */
+function updateTotalValues(totalQuantity, totalPrice) {
+    const totalQuantityElement = document.querySelector(`#totalQuantity`);
+    const totalPriceElement = document.querySelector(`#totalPrice`);
+
+    totalQuantityElement.textContent = totalQuantity;
+    totalPriceElement.textContent = totalPrice.toFixed(2);
+}
+
+
+/**
  * Met à jour le panier (prix, quantité et message panier vide).
  * 
  * @param {Array} selectedProducts Listes des produits
@@ -37,8 +52,7 @@ function updateCart(selectedProducts) {
     if (selectedProducts.length === 0) {
         displayEmptyCartMessage()
     } else {
-        document.querySelector(`#totalQuantity`).textContent = 0;
-        document.querySelector(`#totalPrice`).textContent = 0;
+        updateTotalValues(totalQuantity, totalPrice);
     }
 
     selectedProducts.forEach((selectedProduct, index) => {
@@ -56,8 +70,7 @@ function updateCart(selectedProducts) {
         totalQuantity += selectedProduct.quantity;
     });
 
-    document.querySelector(`#totalQuantity`).textContent = totalQuantity;
-    document.querySelector(`#totalPrice`).textContent = totalPrice.toFixed(2);
+    updateTotalValues(totalQuantity, totalPrice);;
 }
 
 if (selectedProducts && selectedProducts.length > 0) {
@@ -116,8 +129,7 @@ if (selectedProducts && selectedProducts.length > 0) {
         totalPrice += itemTotalPrice;
     });
 
-    document.querySelector(`#totalQuantity`).textContent = totalQuantity;
-    document.querySelector(`#totalPrice`).textContent = totalPrice.toFixed(2);
+    updateTotalValues(totalQuantity, totalPrice);
 } else {
     displayEmptyCartMessage()
 }
