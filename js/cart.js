@@ -136,7 +136,6 @@ if (selectedProducts && selectedProducts.length > 0) {
 /* FORMULAIRE */
 
 function validateForm(input, inputError, inputLabel, regExp) {
-
     let tester = false
     input = document.querySelector(input)
     inputError = document.querySelector(inputError)
@@ -149,7 +148,6 @@ function validateForm(input, inputError, inputLabel, regExp) {
         inputError.textContent = ``;
         tester = true
     }
-
     return tester
 }
 
@@ -160,7 +158,6 @@ document.querySelector(`form`).addEventListener(`submit`, (event) => {
 })
 
 orderButton.addEventListener(`click`, () => {
-
     if (selectedProducts && selectedProducts.length > 0) {
         if (
             validateForm(`#firstName`, `#firstNameErrorMsg`, `prénom`, /^[a-zA-ZàáâäçèéêëìíîïñòóôöùúûüÿÀÁÂÄÇÈÉÊËÌÍÎÏÑÒÓÔÖÙÚÛÜŸ-]+$/) &&
@@ -195,10 +192,9 @@ orderButton.addEventListener(`click`, () => {
                 .then(response => response.json())
                 .then(data => {
                     localStorage.clear()
-                    window.location.href = `./confirmation.html?orderId=${data.orderId}`
+                    window.location.assign(`./confirmation.html?orderId=${data.orderId}`);
                 })
                 .catch(error => console.error(error));
-
         }
     } else {
         alert(`Vous devez ajouter au moins un produit au panier pour commander.`);
