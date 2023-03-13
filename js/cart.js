@@ -213,3 +213,4 @@ orderButton.addEventListener(`click`, () => {
         alert(`Vous devez ajouter au moins un produit au panier pour commander.`);
     }
 });
+
