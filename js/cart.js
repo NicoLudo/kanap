@@ -63,7 +63,7 @@ function updateCart(selectedProducts) {
 
         const itemPrice = parseFloat(selectedProduct.price);
         const itemTotalPrice = itemPrice * selectedProduct.quantity;
-        localStorage.setItem(`itemTotalPrice`, JSON.stringify(selectedProducts));
+        // localStorage.setItem(`itemTotalPrice`, JSON.stringify(selectedProducts));
 
         cartItem.querySelector(`.cart__item__content__description p:last-of-type`).textContent = `${itemTotalPrice} €`;
         totalPrice += itemTotalPrice;
@@ -100,24 +100,24 @@ if (selectedProducts && selectedProducts.length > 0) {
         </div>
     </div>`;
         document.querySelector(`#cart__items`).append(cartItem);
-        updateCart(selectedProducts)
+        // updateCart(selectedProducts);
 
         const itemQuantityInput = cartItem.querySelector(`.itemQuantity`);
         itemQuantityInput.addEventListener(`change`, () => {
             updateCart(selectedProducts);
             localStorage.setItem(`selectedProducts`, JSON.stringify(selectedProducts));
             let newQuantity = parseInt(itemQuantityInput.value);
-            if (newQuantity > 100) {
-                alert(`Vous ne pouvez pas sélectionner plus de 100 quantités.`);
-                newQuantity = 100;
-                itemQuantityInput.value = newQuantity;
-                updateTotalValues(totalQuantity, totalPrice);
-                const savedPrice = localStorage.getItem(`itemTotalPrice`);
-                if (savedPrice) {
-                    const selectedProducts = JSON.parse(savedPrice);
-                    updateCart(selectedProducts);
-                }
-            }
+            // if (newQuantity > 100) {
+            //     alert(`Vous ne pouvez pas sélectionner plus de 100 quantités.`);
+            //     newQuantity = 100;
+            //     itemQuantityInput.value = newQuantity;
+            //     updateTotalValues(totalQuantity, totalPrice);
+            //     const savedPrice = localStorage.getItem(`itemTotalPrice`);
+            //     if (savedPrice) {
+            //         const selectedProducts = JSON.parse(savedPrice);
+            //         updateCart(selectedProducts);
+            //     }
+            // }
             if (newQuantity > 0) {
                 selectedProduct.quantity = newQuantity;
                 localStorage.setItem(`selectedProducts`, JSON.stringify(selectedProducts));
