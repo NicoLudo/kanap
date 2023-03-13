@@ -35,8 +35,12 @@ fetch(apiUrl + productId)
                 alert(`Veuillez sélectionner une quantité valide.`);
                 return;
             }
+            if (quantity > 100) {
+                alert(`Vous ne pouvez pas sélectionner plus de 100 quantités.`);
+                return;
+            }
 
-            if (color === "") {
+            if (color === ``) {
                 alert(`Veuillez sélectionner une couleur.`);
                 return;
             }
