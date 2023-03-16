@@ -3,7 +3,7 @@ apiUrl = `http://localhost:3000/api/products/`;
 /**
  * @param {Array} selectedProducts Listes des produits
  */
-const selectedProducts = JSON.parse(localStorage.getItem(`selectedProducts`));
+let selectedProducts = JSON.parse(localStorage.getItem(`selectedProducts`));
 
 /**
  * Crée et affiche un message indiquant que le panier est vide.
@@ -63,9 +63,7 @@ function updateCart(selectedProducts) {
 
         const itemPrice = parseFloat(selectedProduct.price);
         const itemTotalPrice = itemPrice * selectedProduct.quantity;
-        // localStorage.setItem(`itemTotalPrice`, JSON.stringify(selectedProducts));
 
-        cartItem.querySelector(`.cart__item__content__description p:last-of-type`).textContent = `${itemTotalPrice} €`;
         totalPrice += itemTotalPrice;
         totalQuantity += selectedProduct.quantity;
     });
@@ -80,44 +78,32 @@ if (selectedProducts && selectedProducts.length > 0) {
         const cartItem = document.createElement(`article`);
         cartItem.classList.add(`cart__item`);
         cartItem.innerHTML = `
-    <div class="cart__item__img">
-        <img src="${selectedProduct.imageUrl}" alt="${selectedProduct.altTxt}">
-    </div>
-    <div class="cart__item__content">
-        <div class="cart__item__content__description">
-            <h2>${selectedProduct.name}</h2>
-            <p>${selectedProduct.color}</p>
-            <p>${selectedProduct.price} €</p>
-        </div>
-        <div class="cart__item__content__settings">
-            <div class="cart__item__content__settings__quantity">
-                <p>Qté : </p>
-                <input type="number" class="itemQuantity" name="itemQuantity" min="1" max="100" value="${selectedProduct.quantity}">
+            <div class="cart__item__img">
+                <img src="${selectedProduct.imageUrl}" alt="${selectedProduct.altTxt}">
             </div>
-            <div class="cart__item__content__settings__delete">
-                <p class="deleteItem">Supprimer</p>
-            </div>
-        </div>
-    </div>`;
+            <div class="cart__item__content">
+                <div class="cart__item__content__description">
+                    <h2>${selectedProduct.name}</h2>
+                    <p>${selectedProduct.color}</p>
+                    <p>${selectedProduct.price} €</p>
+                </div>
+                <div class="cart__item__content__settings">
+                    <div class="cart__item__content__settings__quantity">
+                        <p>Qté : </p>
+                        <input type="number" class="itemQuantity" name="itemQuantity" min="1" max="100" value="${selectedProduct.quantity}">
+                    </div>
+                    <div class="cart__item__content__settings__delete">
+                        <p class="deleteItem">Supprimer</p>
+                    </div>
+                </div>
+            </div>`;
         document.querySelector(`#cart__items`).append(cartItem);
-        // updateCart(selectedProducts);
 
         const itemQuantityInput = cartItem.querySelector(`.itemQuantity`);
         itemQuantityInput.addEventListener(`change`, () => {
             updateCart(selectedProducts);
             localStorage.setItem(`selectedProducts`, JSON.stringify(selectedProducts));
             let newQuantity = parseInt(itemQuantityInput.value);
-            // if (newQuantity > 100) {
-            //     alert(`Vous ne pouvez pas sélectionner plus de 100 quantités.`);
-            //     newQuantity = 100;
-            //     itemQuantityInput.value = newQuantity;
-            //     updateTotalValues(totalQuantity, totalPrice);
-            //     const savedPrice = localStorage.getItem(`itemTotalPrice`);
-            //     if (savedPrice) {
-            //         const selectedProducts = JSON.parse(savedPrice);
-            //         updateCart(selectedProducts);
-            //     }
-            // }
             if (newQuantity > 0) {
                 selectedProduct.quantity = newQuantity;
                 localStorage.setItem(`selectedProducts`, JSON.stringify(selectedProducts));
@@ -129,7 +115,7 @@ if (selectedProducts && selectedProducts.length > 0) {
         });
 
         cartItem.querySelector(`.deleteItem`).addEventListener(`click`, () => {
-            selectedProducts.splice(index, 1);
+            selectedProducts = selectedProducts.filter(product => product.productId !== selectedProduct.productId || product.color !== selectedProduct.color);
             localStorage.setItem(`selectedProducts`, JSON.stringify(selectedProducts));
             cartItem.remove();
             updateCart(selectedProducts);
