@@ -47,12 +47,8 @@ fetch(apiUrl + productId)
 
             const item = {
                 productId: product._id,
-                // name: product.name,
-                // price: product.price,
                 quantity: parseInt(quantity),
                 color: color,
-                // imageUrl: product.imageUrl,
-                // altTxt: product.altTxt
             };
 
             let selectedProducts = JSON.parse(localStorage.getItem(`selectedProducts`)) || [];
